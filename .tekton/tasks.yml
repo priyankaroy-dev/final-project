@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: oc-final-pipeline
+spec:
+  tasks:
+    - name: cleanup
+      taskSpec:
+        steps:
+          - name: cleanup
+            image: alpine
+            script: |
+              echo "Cleaning workspace..."
+
+    - name: unit-tests
+      runAfter: ["cleanup"]
+      taskSpec:
+        steps:
+          - name: nose
+            image: python:3.10
+            script: |
+              pip install pytest
+              pytest -q
