@@ -27,5 +27,7 @@ jobs:
           flake8 .
 
       - name: Run unit tests with nose
+        env:
+          PYTHONPATH: .
         run: |
           pytest -q
